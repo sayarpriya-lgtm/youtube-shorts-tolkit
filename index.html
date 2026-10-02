@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Shorts Creator Toolkit</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-950/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-red-600 text-white p-2 rounded-lg">
+                    <i class="fa-solid fa-bolt text-xl"></i>
+                </div>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+                    ShortsToolkit AI
+                </h1>
+            </div>
+            <span class="text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1 rounded-full">
+                Creator Suite v1.0
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Input Panel -->
+        <div class="lg:col-span-5 space-y-6">
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-5 backdrop-blur">
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-red-500"></i> Video Details
+                </h2>
+
+                <form id="generatorForm" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Topic / Keywords *</label>
+                        <input type="text" id="topicInput" required
+                            placeholder="e.g., How to earn money online, iPhone 16 review..."
+                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-red-500 transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Niche / Category</label>
+                        <select id="nicheSelect"
+                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-red-500 transition text-slate-300">
+                            <option value="Tech">Tech & Gadgets</option>
+                            <option value="Gaming">Gaming</option>
+                            <option value="Finance">Finance & Business</option>
+                            <option value="Fitness">Health & Fitness</option>
+                            <option value="Education">Education & Facts</option>
+                            <option value="Lifestyle">Vlog & Lifestyle</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Tone</label>
+                        <select id="toneSelect"
+                            class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-red-500 transition text-slate-300">
+                            <option value="Catchy & Energetic">Catchy & Energetic</option>
+                            <option value="Curious & Mysterious">Curious & Mysterious</option>
+                            <option value="Professional & Educational">Professional & Educational</option>
+                            <option value="Humorous & Funny">Humorous & Funny</option>
+                        </select>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-medium py-3 rounded-lg shadow-lg shadow-red-900/20 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Assets
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Output Panel -->
+        <div class="lg:col-span-7 space-y-6">
+
+            <!-- Default Placeholder State -->
+            <div id="placeholderState" class="bg-slate-800/30 border border-slate-800 rounded-xl p-12 text-center">
+                <i class="fa-solid fa-photo-film text-4xl text-slate-600 mb-3"></i>
+                <h3 class="text-slate-400 font-medium">Koi Topic Enter Karein</h3>
+                <p class="text-xs text-slate-500 mt-1">Aapke video ke liye saare promotional assets yahan generate
+                    honge.</p>
+            </div>
+
+            <!-- Output Container (Hidden initially) -->
+            <div id="outputContainer" class="hidden space-y-6">
+
+                <!-- 1. Hooks -->
+                <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold text-red-400 flex items-center gap-2">
+                            <i class="fa-solid fa-anchor"></i> Viral Hooks (First 3 Sec)
+                        </h3>
+                    </div>
+                    <ul id="hooksList" class="space-y-2 text-sm text-slate-300"></ul>
+                </div>
+
+                <!-- 2. Titles -->
+                <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold text-orange-400 flex items-center gap-2">
+                            <i class="fa-solid fa-heading"></i> Catchy Titles
+                        </h3>
+                    </div>
+                    <ul id="titlesList" class="space-y-2 text-sm text-slate-300"></ul>
+                </div>
+
+                <!-- 3. Description & Hashtags -->
+                <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold text-yellow-400 flex items-center gap-2">
+                            <i class="fa-solid fa-align-left"></i> Optimized Description & Hashtags
+                        </h3>
+                        <button onclick="copyToClipboard('descOutput')"
+                            class="text-xs text-slate-400 hover:text-white bg-slate-700 px-2 py-1 rounded">
+                            <i class="fa-regular fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <div id="descOutput"
+                        class="bg-slate-900/80 p-3.5 rounded-lg text-xs leading-relaxed text-slate-300 border border-slate-800 font-mono">
+                    </div>
+                </div>
+
+                <!-- 4. Tags -->
+                <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold text-green-400 flex items-center gap-2">
+                            <i class="fa-solid fa-tags"></i> Video Tags
+                        </h3>
+                        <button onclick="copyToClipboard('tagsOutput')"
+                            class="text-xs text-slate-400 hover:text-white bg-slate-700 px-2 py-1 rounded">
+                            <i class="fa-regular fa-copy"></i> Copy All
+                        </button>
+                    </div>
+                    <div id="tagsOutput" class="flex flex-wrap gap-2"></div>
+                </div>
+
+                <!-- 5. Thumbnail / AI Prompt -->
+                <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-semibold text-purple-400 flex items-center gap-2">
+                            <i class="fa-solid fa-image"></i> AI Thumbnail Prompt (Midjourney / DALL-E)
+                        </h3>
+                        <button onclick="copyToClipboard('promptOutput')"
+                            class="text-xs text-slate-400 hover:text-white bg-slate-700 px-2 py-1 rounded">
+                            <i class="fa-regular fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <p id="promptOutput"
+                        class="bg-slate-900/80 p-3.5 rounded-lg text-xs text-purple-200 border border-slate-800 italic">
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- JavaScript logic -->
+    <script>
+        document.getElementById('generatorForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const topic = document.getElementById('topicInput').value.trim();
+            const niche = document.getElementById('nicheSelect').value;
+            const tone = document.getElementById('toneSelect').value;
+
+            if (!topic) return;
+
+            // Generate Assets Logic
+            generateHooks(topic, tone);
+            generateTitles(topic, niche);
+            generateDescription(topic, niche);
+            generateTags(topic, niche);
+            generateThumbnailPrompt(topic, tone);
+
+            // Toggle visibility
+            document.getElementById('placeholderState').classList.add('hidden');
+            document.getElementById('outputContainer').classList.remove('hidden');
+        });
+
+        function generateHooks(topic, tone) {
+            const list = document.getElementById('hooksList');
+            list.innerHTML = `
+                <li class="bg-slate-900/60 p-2.5 rounded border border-slate-800">🔥 "Wait! Stop scrolling if you want to know about <b>${topic}</b>!"</li>
+                <li class="bg-slate-900/60 p-2.5 rounded border border-slate-800">⚡ "99% of people get <b>${topic}</b> completely wrong..."</li>
+                <li class="bg-slate-900/60 p-2.5 rounded border border-slate-800">🤫 "The secret shortcut to <b>${topic}</b> nobody tells you."</li>
+            `;
+        }
+
+        function generateTitles(topic, niche) {
+            const list = document.getElementById('titlesList');
+            list.innerHTML = `
+                <li class="bg-slate-900/60 p-2.5 rounded border border-slate-800 flex justify-between items-center">
+                    <span>How to ${topic} in 30 Seconds! 😱</span>
+                    <button onclick="copyText(this)" class="text-xs text-slate-500 hover:text-slate-300"><i class="fa-regular fa-copy"></i></button>
+                </li>
+                <li class="bg-slate-900/60 p-2.5 rounded border border-slate-800 flex justify-between items-center">
+                    <span>Ultimate ${topic} Guide 2026 🔥 #Shorts</span>
+                    <button onclick="copyText(this)" class="text-xs text-slate-500 hover:text-slate-300"><i class="fa-regular fa-copy"></i></button>
+                </li>
+                <li class="bg-slate-900/60 p-2.5 rounded border border-slate-800 flex justify-between items-center">
+                    <span>You Won't Believe This ${topic} Trick! 🤯</span>
+                    <button onclick="copyText(this)" class="text-xs text-slate-500 hover:text-slate-300"><i class="fa-regular fa-copy"></i></button>
+                </li>
+            `;
+        }
+
+        function generateDescription(topic, niche) {
+            const desc = `In this short, we break down everything you need to know about ${topic}. Fast, simple, and straight to the point!
+
+Subscribe for more ${niche.toLowerCase()} tips and updates! 🚀
+
+#Shorts #${topic.replace(/\s+/g, '')} #${niche} #Trending #ViralShorts #YouTubeShorts`;
+
+            document.getElementById('descOutput').innerText = desc;
+        }
+
+        function generateTags(topic, niche) {
+            const baseTags = [topic, `how to ${topic}`, `${topic} tips`, niche, 'shorts', 'youtube shorts', 'viral', 'trending'];
+            const container = document.getElementById('tagsOutput');
+
+            container.innerHTML = baseTags.map(tag =>
+                `<span class="bg-slate-900 text-slate-300 border border-slate-700/60 text-xs px-2.5 py-1 rounded-full">${tag}</span>`
+            ).join('');
+        }
+
+        function generateThumbnailPrompt(topic, tone) {
+            const prompt = `Vertical 9:16 aspect ratio thumbnail image for YouTube Short about "${topic}". High-contrast, vibrant colors, ${tone.toLowerCase()} mood, ultra-detailed 8K resolution, dynamic lighting, dramatic expression, viral youtube aesthetic.`;
+            document.getElementById('promptOutput').innerText = prompt;
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+
+        function copyText(btn) {
+            const text = btn.previousElementSibling.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Title copied!');
+            });
+        }
+    </script>
+</body>
+
+</html>
